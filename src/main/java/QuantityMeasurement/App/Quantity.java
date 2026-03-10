@@ -115,5 +115,21 @@ public class Quantity<U extends IMeasurable> {
         Quantity<WeightUnit> weightSum = w1.add(w2, WeightUnit.KILOGRAM);
 
         System.out.println("1 kg + 1000 g in kg : " + weightSum);
+        
+        Quantity<VolumeUnit> v1 = new Quantity<>(1.0, VolumeUnit.LITRE);
+        Quantity<VolumeUnit> v2 = new Quantity<>(1000.0, VolumeUnit.MILLILITRE);
+        Quantity<VolumeUnit> v3 = new Quantity<>(1.0, VolumeUnit.GALLON);
+
+        System.out.println("Equality:");
+        System.out.println(v1.equals(v2));
+
+        System.out.println("Conversion:");
+        System.out.println(v3.convertTo(VolumeUnit.LITRE));
+
+        System.out.println("Addition:");
+        System.out.println(v1.add(v2));
+
+        System.out.println("Addition with target unit:");
+        System.out.println(v1.add(v3, VolumeUnit.MILLILITRE));
     }
 }
