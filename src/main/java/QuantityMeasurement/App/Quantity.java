@@ -86,6 +86,8 @@ public class Quantity<U extends IMeasurable> {
     // add
     public Quantity<U> add(Quantity<U> other) {
 
+        unit.validateOperationSupport("addition");
+
         validateArithmeticOperands(other, null, false);
 
         double resultBase = performBaseArithmetic(other, ArithmeticOperation.ADD);
@@ -94,7 +96,7 @@ public class Quantity<U extends IMeasurable> {
 
         return new Quantity<>(roundTwo(result), unit);
     }
-
+    
     public Quantity<U> add(Quantity<U> other, U targetUnit) {
 
         validateArithmeticOperands(other, targetUnit, true);
@@ -108,6 +110,8 @@ public class Quantity<U extends IMeasurable> {
 
     // Subtract  - UC12
     public Quantity<U> subtract(Quantity<U> other) {
+
+        unit.validateOperationSupport("subtraction");
 
         validateArithmeticOperands(other, null, false);
 
@@ -132,11 +136,12 @@ public class Quantity<U extends IMeasurable> {
     // Divide
     public double divide(Quantity<U> other) {
 
+        unit.validateOperationSupport("division");
+
         validateArithmeticOperands(other, null, false);
 
         return performBaseArithmetic(other, ArithmeticOperation.DIVIDE);
     }
-
     // Equals
     @Override
     public boolean equals(Object obj) {
@@ -217,5 +222,22 @@ public class Quantity<U extends IMeasurable> {
         Quantity<LengthUnit> q5 = new Quantity<>(2.0, LengthUnit.FEET);
 
         System.out.println("Division : " + q3.divide(q5));
+        
+        System.out.println("\nTemperature Operations:");
+
+        Quantity<TemperatureUnit> t1 =
+                new Quantity<>(0.0, TemperatureUnit.CELSIUS);
+
+        Quantity<TemperatureUnit> t2 =
+                new Quantity<>(32.0, TemperatureUnit.FAHRENHEIT);
+
+        System.out.println("0C == 32F : " + t1.equals(t2));
+
+        System.out.println("100C to F : " +
+                new Quantity<>(100.0, TemperatureUnit.CELSIUS)
+                        .convertTo(TemperatureUnit.FAHRENHEIT));
+        
+        
+       
     }
 }
